@@ -8,11 +8,11 @@ class Settle extends Model
 {
     public function owningUser()
     {
-        return $this->hasOne('App\User', 'user_owns');
+        return $this->hasOne('App\User', 'id', 'user_owns');
     }
 
     public function leaningUser()
     {
-        return $this->hasOne('App\User', 'user_lent');
+        return $this->hasOne('App\User', 'id', 'user_lent');
     }
 }
