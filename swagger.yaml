@@ -109,7 +109,7 @@ paths:
           type: integer
           format: int64
       responses:
-        '204':
+        '200':
           description: successful operation
           schema:
             $ref: '#/definitions/Slip'
@@ -407,17 +407,20 @@ securityDefinitions:
 definitions:
   User:
     type: object
-    required:
-      - email
-      - name
-    properties:
-      id:
-        type: integer
-        format: int64
-      email:
-        type: string
-      name:
-        type: string
+    allOf:
+      - type: object
+        required:
+          - email
+          - name
+        properties:
+          id:
+            type: integer
+            format: int64
+          email:
+            type: string
+          name:
+            type: string
+      - $ref: '#/definitions/Timestamps'
   UserInvite:
     type: object
     required:
@@ -443,12 +446,18 @@ definitions:
           id:
             type: integer
             format: int64
+          price:
+            type: number
+            format: float
+          payed:
+            type: boolean
+            default: false
           date:
             type: string
             format: date-time
-          userId:
-            type: integer
-            format: int64
+          user:
+            $ref: '#/definitions/User'
+      - $ref: '#/definitions/Timestamps'
   SlipPut:
     type: object
     properties:
@@ -458,16 +467,22 @@ definitions:
       payed:
         type: boolean
         default: false
+      userId:
+        type: number
+        format: int64
   Item:
     type: object
-    required:
-      - name
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
+    allOf:
+      - type: object
+        required:
+          - name
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+      - $ref: '#/definitions/Timestamps'
   ItemWithDesc:
     type: object
     allOf:
@@ -476,12 +491,10 @@ definitions:
         properties:
           description:
             type: string
+      - $ref: '#/definitions/Timestamps'
   ItemSlip:
     type: object
     properties:
-      id:
-        type: integer
-        format: int64
       description:
         type: string
   Settle:
@@ -521,3 +534,12 @@ definitions:
     properties:
       token:
         type: string
+  Timestamps:
+    type: object
+    properties:
+      createAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
