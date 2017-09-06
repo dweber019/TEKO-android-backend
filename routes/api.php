@@ -28,3 +28,8 @@ Route::resource('users', 'UserController', ['except' => [ 'create', 'edit' ]]);
  * Items routes
  */
 Route::get('items', 'ItemController@index');
+
+/**
+ * Settles routes
+ */
+Route::resource('settles', 'SettleController', ['except' => [ 'create', 'edit', 'delete' ]]);
