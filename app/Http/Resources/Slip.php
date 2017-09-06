@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+use App\Http\Resources\User as UserResource;
 
 class Slip extends Resource
 {
@@ -14,6 +15,14 @@ class Slip extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+          'id' => $this->id,
+          'date' => is_null($this->date) ? $this->date : $this->date->toDateTimeString(),
+          'price' => $this->price,
+          'payed' => $this->payed,
+          'user' => new UserResource($this->resource->user()->first()),
+          'createdAt' => is_null($this->created_at) ? $this->created_at : $this->created_at->toDateTimeString(),
+          'updatedAt' => is_null($this->updated_at) ? $this->updated_at : $this->updated_at->toDateTimeString(),
+        ];
     }
 }
