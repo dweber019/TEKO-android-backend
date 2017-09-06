@@ -18,3 +18,13 @@ use Illuminate\Http\Request;
 //});
 
 Route::post('login', array('uses' => 'AuthenticateController@authenticate'));
+
+/**
+ * Users routes
+ */
+Route::resource('users', 'UserController', ['except' => [ 'create', 'edit' ]]);
+
+/**
+ * Items routes
+ */
+Route::get('items', 'ItemController@index');
