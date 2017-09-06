@@ -1,0 +1,523 @@
+swagger: '2.0'
+info:
+  description: This is the API for the settle up app. It's a projekt done for TEKO Olten.
+  version: 1.0.0
+  title: Settle UP API
+  contact:
+    email: david.weber@edu.teko.ch
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 127.0.0.1:8000
+basePath: /api
+tags:
+  - name: Einkauf
+  - name: Items
+  - name: Benutzer
+  - name: Settle
+schemes:
+  - http
+paths:
+  /slips:
+    get:
+      tags:
+        - Einkauf
+      summary: Alle Einkaufszettel für den Token Benutzer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Slip'
+    post:
+      tags:
+        - Einkauf
+      summary: Neuen Einkaufszettel hinzufügen
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Einkaufszettel erstellt
+  '/slips/{id}':
+    get:
+      tags:
+        - Einkauf
+      summary: Finde einen Einkaufszettel
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Slip'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel nicht gefunden
+    put:
+      tags:
+        - Einkauf
+      summary: Aktuallisiere einen Einkaufszettel
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: body
+          description: Das Objekt um eine neu Wohngemeinschaft zu erstellen
+          required: true
+          schema:
+            $ref: '#/definitions/SlipPut'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Slip'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel nicht gefunden
+    delete:
+      tags:
+        - Einkauf
+      summary: Lösche einen Einkaufszettel
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Slip'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel nicht gefunden
+  '/slips/{id}/items':
+    get:
+      tags:
+        - Einkauf
+      summary: Finde einen Einkaufszettel
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemWithDesc'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel nicht gefunden
+  '/slips/{id}/items/{iid}':
+    post:
+      tags:
+        - Einkauf
+      summary: Item dem Einkaufszettel hinzufügen
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+        - name: iid
+          in: path
+          description: ID des Items
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: body
+          description: Das Objekt um eine Item dem Einkaufzettel hinzuzufügen
+          required: true
+          schema:
+            $ref: '#/definitions/ItemSlip'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemWithDesc'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel oder Item nicht gefunden
+    delete:
+      tags:
+        - Einkauf
+      summary: Item dem Einkaufszettel entfernen
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Einkaufszettels
+          required: true
+          type: integer
+          format: int64
+        - name: iid
+          in: path
+          description: ID des Items
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ItemWithDesc'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Einkaufszettel oder Item nicht gefunden
+  /users:
+    get:
+      tags:
+        - Benutzer
+      summary: Alle Benutzer für den Token Benutzer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+    post:
+      tags:
+        - Benutzer
+      summary: Neuer Benutzer hinzufügen
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Das Objekt um eine neu Wohngemeinschaft zu erstellen
+          required: true
+          schema:
+            $ref: '#/definitions/UserInvite'
+      responses:
+        '405':
+          description: Invalid input
+  '/users/{id}':
+    get:
+      tags:
+        - Benutzer
+      summary: Finde einen Benutzer
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Benutzers
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Benutzer nicht gefunden
+    delete:
+      tags:
+        - Benutzer
+      summary: Lösche einen Benutzer
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Benutzers
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Benutzer nicht gefunden
+  /login:
+    post:
+      tags:
+        - Login
+      summary: Login user
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Das Objekt um eine neu Wohngemeinschaft zu erstellen
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '405':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Token'
+  /items:
+    get:
+      tags:
+        - Items
+      summary: Alle Items für den Token Benutzer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Item'
+  /settles:
+    get:
+      tags:
+        - Settle
+      summary: Alle Settles für den Token Benutzer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Settle'
+    post:
+      tags:
+        - Settle
+      summary: Alle Einkaufszettel auf die Benutzer ausgleichen
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Settle'
+  '/settles/{id}':
+    get:
+      tags:
+        - Settle
+      summary: Finde einen Settle
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Settles
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Settle'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Settle nicht gefunden
+    put:
+      tags:
+        - Settle
+      summary: Aktuallisiere einen Settle
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID des Settle
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: body
+          description: Das Objekt um eine Settle zu bearbeiten
+          required: true
+          schema:
+            $ref: '#/definitions/SettlePut'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Settle'
+        '400':
+          description: Falsche ID
+        '404':
+          description: Settle nicht gefunden
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    type: object
+    required:
+      - email
+      - name
+    properties:
+      id:
+        type: integer
+        format: int64
+      email:
+        type: string
+      name:
+        type: string
+  UserInvite:
+    type: object
+    required:
+      - name
+      - email
+      - password
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  Slip:
+    type: object
+    required:
+      - date
+      - communeId
+    allOf:
+      - $ref: '#/definitions/SlipPut'
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          date:
+            type: string
+            format: date-time
+          userId:
+            type: integer
+            format: int64
+  SlipPut:
+    type: object
+    properties:
+      price:
+        type: number
+        format: float
+      payed:
+        type: boolean
+        default: false
+  Item:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+  ItemWithDesc:
+    type: object
+    allOf:
+      - $ref: '#/definitions/Item'
+      - type: object
+        properties:
+          description:
+            type: string
+  ItemSlip:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      description:
+        type: string
+  Settle:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      userOwns:
+        type: string
+      userLent:
+        type: string
+      date:
+        type: string
+        format: date-time
+      payed:
+        type: boolean
+        default: false
+      price:
+        type: number
+        format: float
+  SettlePut:
+    type: object
+    properties:
+      payed:
+        type: boolean
+        default: false
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
