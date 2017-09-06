@@ -20,7 +20,7 @@ class Slip extends Resource
           'date' => is_null($this->date) ? $this->date : $this->date->toDateTimeString(),
           'price' => $this->price,
           'payed' => $this->payed,
-          'user' => new UserResource($this->resource->user()->first()),
+          'user' => new UserResource($this->whenLoaded('user')),
           'createdAt' => is_null($this->created_at) ? $this->created_at : $this->created_at->toDateTimeString(),
           'updatedAt' => is_null($this->updated_at) ? $this->updated_at : $this->updated_at->toDateTimeString(),
         ];

@@ -20,8 +20,8 @@ class Settle extends Resource
           'date' => is_null($this->date) ? $this->date : $this->date->toDateTimeString(),
           'payed' => $this->payed,
           'amount' => $this->amount,
-          'userOwns' => new UserResource($this->resource->owningUser()->first()),
-          'userLent' => new UserResource($this->resource->leaningUser()->first()),
+          'userOwns' => new UserResource($this->whenLoaded('owningUser')),
+          'userLent' => new UserResource($this->whenLoaded('leaningUser')),
           'createdAt' => is_null($this->created_at) ? $this->created_at : $this->created_at->toDateTimeString(),
           'updatedAt' => is_null($this->updated_at) ? $this->updated_at : $this->updated_at->toDateTimeString(),
         ];
