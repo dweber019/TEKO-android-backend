@@ -452,6 +452,9 @@ definitions:
           payed:
             type: boolean
             default: false
+          settled:
+            type: boolean
+            default: false
           date:
             type: string
             format: date-time
@@ -499,23 +502,26 @@ definitions:
         type: string
   Settle:
     type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      userOwns:
-        type: string
-      userLent:
-        type: string
-      date:
-        type: string
-        format: date-time
-      payed:
-        type: boolean
-        default: false
-      price:
-        type: number
-        format: float
+    allOf:
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          userOwns:
+            type: string
+          userLent:
+            type: string
+          date:
+            type: string
+            format: date-time
+          payed:
+            type: boolean
+            default: false
+          price:
+            type: number
+            format: float
+      - $ref: '#/definitions/Timestamps'
   SettlePut:
     type: object
     properties:

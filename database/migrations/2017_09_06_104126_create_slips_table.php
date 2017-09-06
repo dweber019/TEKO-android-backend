@@ -18,6 +18,7 @@ class CreateSlipsTable extends Migration
             $table->timestamp('date')->useCurrent = true;
             $table->double('price')->nullable();
             $table->boolean('payed')->default(false);
+            $table->boolean('settled')->default(false);
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
 

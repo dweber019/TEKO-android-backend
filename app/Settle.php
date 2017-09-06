@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Settle extends Model
 {
+    protected $fillable = ['amount', 'user_owns', 'user_lent'];
+
     protected $dates = [
       'date',
     ];
