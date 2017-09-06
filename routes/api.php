@@ -33,3 +33,11 @@ Route::get('items', 'ItemController@index');
  * Settles routes
  */
 Route::resource('settles', 'SettleController', ['except' => [ 'create', 'edit', 'delete' ]]);
+
+/**
+ * Slips routes
+ */
+Route::get('/slips/{slip}/items', 'SlipController@items');
+Route::post('/slips/{slip}/items/{item}', 'SlipController@itemsAdd');
+Route::delete('/slips/{slip}/items/{item}', 'SlipController@itemsRemove');
+Route::resource('slips', 'SlipController', ['except' => [ 'create', 'edit' ]]);
