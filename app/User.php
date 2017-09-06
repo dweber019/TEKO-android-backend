@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function owns()
+    {
+        return $this->hasMany('App\Settle', 'id', 'user_owns');
+    }
+
+    public function lent()
+    {
+        return $this->hasMany('App\Settle', 'id', 'user_lent');
+    }
 }
