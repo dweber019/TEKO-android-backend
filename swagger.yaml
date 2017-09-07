@@ -1,6 +1,9 @@
 swagger: '2.0'
 info:
-  description: This is the API for the settle up app. It's a projekt done for TEKO Olten.
+  description: |
+    This is the API for the settle up app. It's a projekt done for TEKO Olten.
+
+    Change the host to to 127.0.0.1:8000 to target the local development environment and wg-app.scapp.io to target the production system.
   version: 1.0.0
   title: Settle UP API
   contact:
@@ -8,7 +11,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: 127.0.0.1:8000
+host: wg-app.scapp.io
 basePath: /api
 tags:
   - name: Einkauf
