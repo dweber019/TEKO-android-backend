@@ -95,12 +95,12 @@ class SlipController extends Controller
 
         $slip->items()->attach($item->id, ['description' => $request->description]);
 
-        return new SlipItemResource($slip->items()->where('id', $item->id)->get());
+        return new SlipItemResource($slip->items()->where('id', $item->id)->first());
     }
 
     public function itemsRemove(Slip $slip, Item $item)
     {
-        $itemBak = $slip->items()->where('id', $item->id)->get();
+        $itemBak = $slip->items()->where('id', $item->id)->first();
         $slip->items()->detach($item->id);
 
         return new SlipItemResource($itemBak);
