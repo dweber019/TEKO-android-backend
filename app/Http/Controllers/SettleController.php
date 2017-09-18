@@ -19,7 +19,7 @@ class SettleController extends Controller
      */
     public function index()
     {
-        return SettleResource::collection(Settle::with(['owningUser', 'leaningUser'])->get());
+        return SettleResource::collection(Settle::where('payed', false)->with(['owningUser', 'leaningUser'])->get());
     }
 
     /**
