@@ -36,6 +36,10 @@ class SettleController extends Controller
         $payedAndUnsettledSlips = Slip::where('payed', 1)->where('settled', 0)->get()->toArray();
         $users = User::get()->toArray();
 
+        if (sizeof($payedAndUnsettledSlips) == 0) {
+            return SettleResource::collection(Settle::with(['owningUser', 'leaningUser'])->get());
+        }
+
         foreach ($payedAndUnsettledSlips as &$slip) {
             foreach ($users as &$user) {
                 if ($slip['user_id'] != $user['id']) {
@@ -46,10 +50,6 @@ class SettleController extends Controller
                     ];
                 }
             }
-        }
-
-        if (sizeof($payedAndUnsettledSlips) == 0) {
-            return SettleResource::collection(Settle::with(['owningUser', 'leaningUser'])->get());
         }
 
         // Add all open Settles
