@@ -19,8 +19,8 @@ tags:
   - name: Benutzer
   - name: Settle
 schemes:
-  - http
   - https
+  - http
 securityDefinitions:
  Bearer:
   description: |
@@ -488,7 +488,6 @@ definitions:
     type: object
     required:
       - date
-      - communeId
     allOf:
       - $ref: '#/definitions/SlipPut'
       - type: object
