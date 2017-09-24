@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\Slip;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources\Slip as SlipResource;
 use App\Http\Resources\SlipItem as SlipItemResource;
@@ -28,7 +29,7 @@ class SlipController extends Controller
      */
     public function store(Request $request)
     {
-        $slip = new Slip;
+        $slip = new Slip([ 'date' => Carbon::now() ]);
 
         $slip->save();
 

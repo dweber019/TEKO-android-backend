@@ -11,6 +11,10 @@ class Slip extends Model
       'date',
     ];
 
+    protected $fillable = [
+      'date'
+    ];
+
     public function items()
     {
         return $this->belongsToMany('App\Item', 'slips_items')
