@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Settle;
 use App\Slip;
 use App\User;
-use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use App\Http\Resources\Settle as SettleResource;
 use Illuminate\Support\Facades\DB;
@@ -150,7 +149,7 @@ class SettleController extends Controller
             }
         });
 
-        return SettleResource::collection(Settle::with(['owningUser', 'leaningUser'])->get());
+        return SettleResource::collection(Settle::where('payed', false)->with(['owningUser', 'leaningUser'])->get());
     }
 
     /**
